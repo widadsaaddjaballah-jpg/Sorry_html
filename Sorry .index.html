@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For You ❤️</title>
+    <style>
+        :root {
+            --primary-pink: #ffafbd;
+            --deep-red: #ff385c;
+            --soft-white: #fff0f3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-pink), #ffc3a0);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        /* --- Animations --- */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            100% { transform: translate(1px, 1px) rotate(0deg); }
+        }
+
+        /* --- Containers --- */
+        .page {
+            display: none;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .active { display: block; }
+
+        h1 { font-size: 1.5rem; margin-bottom: 20px; line-height: 1.4; }
+        p { font-size: 1.1rem; margin-bottom: 15px; }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            height: 60px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: var(--deep-red);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .btn-no {
+            background: #888;
+            position: absolute;
+        }
+
+        .heart-main {
+            font-size: 80px;
+            color: var(--deep-red);
+            animation: pulse 1.5s infinite;
+            margin-bottom: 20px;
+        }
+
+        /* --- Floating Hearts --- */
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: float linear forwards;
+        }
+
+        #bg-music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="bg-music-toggle" onclick="toggleMusic()">🎵</button>
+    
+    <!-- AUDIO FILES: Replace the 'src' with your uploaded file links -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="voice-message">
+        <source src="YOUR_VOICE_MESSAGE_LINK_HERE.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PAGE 1 -->
+    <div id="page1" class="page active">
+        <div class="heart-main">❤️</div>
+        <h1>Before you continue... I have one tiny question ❤️</h1>
+        <p>Do you still love me?</p>
+        <div class="btn-container">
+            <button onclick="nextPage(1)">Yes ❤️</button>
+            <button class="btn-no" id="run-away-1">No 💔</button>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2" class="page">
+        <p>Okay... so maybe I was a little dramatic 😏</p>
+        <p>Fine... maybe I annoyed you a bit 🥺</p>
+        <button onclick="nextPage(2)" style="animation: pulse 2s infinite;">Continue</button>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3" class="page">
+        <h1 id="typewriter1"></h1>
+        <button onclick="nextPage(3)">Read more</button>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div id="page4" class="page">
+        <p>But the truth is...</p>
+        <p>You matter to me more than my pride. And if I upset you, please forgive my silly overthinking ❤️</p>
+        <button onclick="nextPage(4)">Secret confession</button>
+    </div>
+
+    <!-- PAGE 5 -->
+    <div id="page5" class="page">
+        <p>Okay... confession time 😌</p>
+        <p>Sometimes I act dramatic just because I want all your attention 😏❤️</p>
+        <p>Yes... I'm guilty. Certified little troublemaker 😂</p>
+        <button onclick="nextPage(5)">Last message</button>
+    </div>
+
+    <!-- PAGE 6 -->
+    <div id="page6" class="page">
+        <p>I never want my mistakes to become distance between us.</p>
+        <p>If I hurt you, I'm deeply sorry. You are precious to me. And I love you more than words can explain.</p>
+        <button onclick="nextPage(6)">Open my final gift 🎁</button>
+    </div>
+
+    <!-- FINAL PAGE -->
+    <div id="page7" class="page">
+        <div class="heart-main">🎁</div>
+        <h1>This is my heart speaking to yours ❤️</h1>
+        <button onclick="playVoice()">Play my voice message</button>
+        <div class="btn-container">
+            <button onclick="forgive()">Forgive me ❤️</button>
+            <button class="btn-no" id="run-away-2">No 😏</button>
+        </div>
+        <h2 id="final-msg" style="display:none; margin-top: 20px; color: var(--deep-red);">
+            I knew your heart was too beautiful to stay upset ❤️<br>I love you endlessly.
+        </h2>
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        function nextPage(current) {
+            document.getElementById(`page${current}`).classList.remove('active');
+            document.getElementById(`page${current + 1}`).classList.add('active');
+            
+            if (current === 1) {
+                vibrateDevice(100);
+                startHeartRain();
+            }
+            if (current === 2) {
+                startTypewriter("I'm truly sorry...\nI know I made things heavy...\nI know I annoyed you...\nAnd I hate being the reason for your sadness.", "typewriter1");
+            }
+        }
+
+        // --- Escaping Button Logic ---
+        function setupEscapingButton(id) {
+            const btn = document.getElementById(id);
+            const moveBtn = () => {
+                const x = Math.random() * (window.innerWidth - 100);
+                const y = Math.random() * (window.innerHeight - 50);
+                btn.style.left = `${x}px`;
+                btn.style.top = `${y}px`;
+                btn.style.position = 'fixed';
+            };
+            btn.addEventListener('touchstart', moveBtn);
+            btn.addEventListener('mouseover', moveBtn);
+        }
+
+        setupEscapingButton('run-away-1');
+        setupEscapingButton('run-away-2');
+
+        // --- Effects ---
+        function vibrateDevice(ms) {
+            if (navigator.vibrate) navigator.vibrate(ms);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.duration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        function startHeartRain() {
+            for(let i=0; i<20; i++) setTimeout(createHeart, i*100);
+        }
+
+        function startTypewriter(text, elementId) {
+            let i = 0;
+            const el = document.getElementById(elementId);
+            el.innerHTML = "";
+            function type() {
+                if (i < text.length) {
+                    el.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+            type();
+        }
+
+        // --- Audio Control ---
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            if (music.paused) music.play();
+            else music.pause();
+        }
+
+        function playVoice() {
+            document.getElementById('my love').play();
+        }
+
+        function forgive() {
+            vibrateDevice([100, 50, 100, 50, 300]);
+            document.getElementById('final-msg').style.display = 'block';
+            startHeartRain();
+        }
+    </script>
+</body>
+</html>
